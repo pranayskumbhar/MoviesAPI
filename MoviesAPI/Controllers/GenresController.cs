@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MoviesAPI.Entities;
 using MoviesAPI.Services;
+using Repository;
 
 namespace MoviesAPI.Controllers
 {
@@ -37,7 +38,7 @@ namespace MoviesAPI.Controllers
         [Route("api/genres3")]
         public Genre Get(int id)
         {
-            return repository.GetAllGenres().Find(x=> x.Id == id);
+            return repository.GetAllGenres().Find(x => x.Id == id)!;
 
         }
 

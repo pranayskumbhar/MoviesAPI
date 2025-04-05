@@ -11,6 +11,8 @@ namespace MoviesAPI.Services
                 {
                     new Genre(){ Id = 1, Name ="Inception" },
                     new Genre(){ Id = 2, Name ="Harry Potter" },
+                    new Genre(){ Id = 11, Name ="Pranay Kumbhar" },
+                    new Genre(){ Id = 12, Name ="Lets Rock" },
                 };
         }
 

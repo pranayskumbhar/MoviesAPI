@@ -1,0 +1,16 @@
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Message: genres1
+Controller: GenresController
+Method: Get
+Line Number: 25
+Timestamp: 05-04-2025 16:37:26
+File: D:\Pranay\Udemy\MoviesAPI\MoviesAPI\Controllers\GenresController.cs
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Message: Line Number : 26, controller = Genres, action=Get, Exception : Exception of type 'System.Exception' was thrown.
+Controller: <InvokeAsync>d__3
+Method: MoveNext
+Line Number: 37
+Timestamp: 05-04-2025 16:37:34
+File: D:\Pranay\Udemy\MoviesAPI\MoviesAPI\Middlwares\ExceptionHandlingMiddleware.cs
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
