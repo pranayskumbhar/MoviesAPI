@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using MoviesAPI.Data;
+using MoviesAPI.DTOs;
 using MoviesAPI.Entities;
 using MoviesAPI.Services;
 using Repository;
@@ -6,31 +11,57 @@ using Repository;
 namespace MoviesAPI.Controllers
 {
     [Route("api/genres")]
-    public class GenresController
+    [ApiController]
+    public class GenresController : ControllerBase
     {
         private readonly IRepository repository;
+        private readonly ApplicationDBContext _context;
+        private readonly IMapper mapper;
 
 
 
-        public GenresController(IRepository repository)
+        public GenresController(IRepository repository, ApplicationDBContext context, IMapper _mapper)
         {
             this.repository = repository;
+            _context = context;
+            mapper = _mapper;
         }
 
 
         [HttpGet]
-        [Route("api/genres1")]
-        public List<Genre> Get()
+        //api/genres
+        // Method : GET
+        public async Task<List<GenreDTO>> GetAsync()
         {
-            return repository.GetAllGenres();
+            try
+            {
+                var ganres = await _context.Genres.ToListAsync();
+                return mapper.Map<List<GenreDTO>>(ganres);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
 
         [HttpPost]
-        [Route("api/genres2")]
-        public List<Genre> Post()
+        //api/genres        
+        // Method : POST
+        public async Task<IActionResult> POST([FromBody] GenreCreationDTO genreCreationDTO)
         {
-            return repository.GetAllGenres();
+            try
+            {
+                var genre = mapper.Map<Genre>(genreCreationDTO);
+                _context.Genres.Add(genre);
+                await _context.SaveChangesAsync();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
 
 

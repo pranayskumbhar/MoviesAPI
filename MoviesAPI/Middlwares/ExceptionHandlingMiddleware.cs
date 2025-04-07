@@ -31,9 +31,6 @@ namespace MoviesAPI.Middlwares
                 var line = frame?.GetFileLineNumber();
                 var file = frame?.GetFileName();
 
-               
-
-
                 LogException.LogIntoText(controller, action, line, file, ex);
                 //LogException.LogIntoExcel(controller, action, line, file, ex);
                 //LogException.LogIntoCsv(controller, action, line, file, ex);
