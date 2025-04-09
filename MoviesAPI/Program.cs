@@ -35,6 +35,7 @@
 
 
 using Microsoft.EntityFrameworkCore;
+using MoviesAPI.ApiBehaviour;
 using MoviesAPI.Data;
 using MoviesAPI.Filters;
 using MoviesAPI.Middlwares;
@@ -44,7 +45,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(option =>
+{
+    option.Filters.Add(typeof(ParseBadRequest));
+    option.Filters.Add(typeof(LogExceptionFilter));
+}).ConfigureApiBehaviorOptions(BadRequestBehaviour.Parse);
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
@@ -73,7 +79,8 @@ builder.Services.AddCors(options =>
         policy
             .AllowAnyOrigin()
             .AllowAnyMethod()
-            .AllowAnyHeader();
+            .AllowAnyHeader()
+            .WithExposedHeaders("totalAmountOfRecords"); 
     });
 });
 

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using MoviesAPI.Data;
 using MoviesAPI.DTOs;
 using MoviesAPI.Entities;
+using MoviesAPI.Helpers;
 using MoviesAPI.Services;
 using Repository;
 
@@ -31,11 +32,13 @@ namespace MoviesAPI.Controllers
         [HttpGet]
         //api/genres
         // Method : GET
-        public async Task<List<GenreDTO>> GetAsync()
+        public async Task<List<GenreDTO>> GetAsync([FromQuery] PaginationDTO paginationDTO)
         {
             try
             {
-                var ganres = await _context.Genres.ToListAsync();
+                var queryable = _context.Genres.AsQueryable();
+                await HttpContext.InsertParametersPaginationInHeader(queryable);
+                var ganres = await queryable.OrderBy(x=> x.Name).Paginate(paginationDTO).ToListAsync();
                 return mapper.Map<List<GenreDTO>>(ganres);
             }
             catch (Exception)
