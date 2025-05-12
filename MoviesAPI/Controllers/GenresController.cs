@@ -8,6 +8,7 @@ using MoviesAPI.Entities;
 using MoviesAPI.Helpers;
 using MoviesAPI.Services;
 using Repository;
+using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
 
 namespace MoviesAPI.Controllers
 {
@@ -38,10 +39,10 @@ namespace MoviesAPI.Controllers
             {
                 var queryable = _context.Genres.AsQueryable();
                 await HttpContext.InsertParametersPaginationInHeader(queryable);
-                var ganres = await queryable.OrderBy(x=> x.Name).Paginate(paginationDTO).ToListAsync();
+                var ganres = await queryable.OrderBy(x => x.Name).Paginate(paginationDTO).ToListAsync();
                 return mapper.Map<List<GenreDTO>>(ganres);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw;
             }
@@ -62,34 +63,74 @@ namespace MoviesAPI.Controllers
             }
             catch (Exception ex)
             {
+                throw;
+            }
+        }
+
+
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<GenreDTO>> Get(int id)
+        {
+            try
+            {
+                var genre = await _context.Genres.FirstOrDefaultAsync(x => x.Id == id);
+                if (genre == null)
+                {
+                    return NotFound();
+                }
+                return mapper.Map<GenreDTO>(genre);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+        }
+
+
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> Put(int id, [FromBody] GenreCreationDTO genreCreationDTO)
+        {
+
+            try
+            {
+                var genre = await _context.Genres.FirstOrDefaultAsync(x => x.Id == id);
+                if (genre == null)
+                {
+                    return NotFound();
+                }
+                genre = mapper.Map(genreCreationDTO, genre);
+                await _context.SaveChangesAsync();
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
 
                 throw;
             }
         }
 
 
-        [HttpGet]
-        [Route("api/genres3")]
-        public Genre Get(int id)
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            return repository.GetAllGenres().Find(x => x.Id == id)!;
+            try
+            {
+                var exists = await _context.Genres.AnyAsync(x => x.Id == id);
+                if (!exists)
+                {
+                    return NotFound();
+                }
+                _context.Remove(new Genre() { Id = id });
+                await _context.SaveChangesAsync();
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
 
-        }
-
-
-        [HttpPut]
-        [Route("api/genres4")]
-        public List<Genre> Put()
-        {
-            return repository.GetAllGenres();
-        }
-
-
-        [HttpDelete]
-        [Route("api/genre5")]
-        public List<Genre> Delete()
-        {
-            return repository.GetAllGenres();
+                throw;
+            }
         }
 
     }
