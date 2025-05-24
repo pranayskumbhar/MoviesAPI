@@ -8,7 +8,7 @@ using MoviesAPI.Entities;
 using MoviesAPI.Helpers;
 using MoviesAPI.Services;
 using Repository;
-using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
+//using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
 
 namespace MoviesAPI.Controllers
 {
@@ -54,6 +54,9 @@ namespace MoviesAPI.Controllers
         // Method : POST
         public async Task<IActionResult> POST([FromBody] GenreCreationDTO genreCreationDTO)
         {
+
+            Logger.LogIntoText();
+
             try
             {
                 var genre = mapper.Map<Genre>(genreCreationDTO);
