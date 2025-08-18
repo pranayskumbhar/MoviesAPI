@@ -22,7 +22,7 @@ namespace Repository
             {
                 Directory.CreateDirectory(logDirectory);
             }
-            fileName = "D" + DateTime.Now.ToString("yyyyMMddHHmmssfff");
+            fileName = "D" + DateTime.Now.ToString("ddMMMyyyy");
         }
         #endregion
 

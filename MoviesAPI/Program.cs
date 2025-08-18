@@ -36,12 +36,19 @@
 
 using Microsoft.EntityFrameworkCore;
 using MoviesAPI.ApiBehaviour;
+using MoviesAPI.CommonFunctionalities;
 using MoviesAPI.Data;
 using MoviesAPI.Filters;
 using MoviesAPI.Middlwares;
+using MoviesAPI.PollyHelper;
 using MoviesAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+PollyRetryHelper.Initialize();
+
+
+builder.Services.AddScoped<OpenAiService>();
 
 // Add services to the container.
 
@@ -87,7 +94,6 @@ builder.Services.AddCors(options =>
 
 
 builder.Services.AddAutoMapper(typeof(Program));
-
 builder.Services.AddSingleton<IRepository, InMemoryRepository>();
 
 var app = builder.Build();

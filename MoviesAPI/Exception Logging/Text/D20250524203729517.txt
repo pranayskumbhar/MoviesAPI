@@ -1,0 +1,32 @@
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Message: System.InvalidOperationException: The request message was already sent. Cannot send the same request message multiple times.
+   at System.Net.Http.HttpClient.CheckRequestMessage(HttpRequestMessage request)
+   at System.Net.Http.HttpClient.CheckRequestBeforeSend(HttpRequestMessage request)
+   at System.Net.Http.HttpClient.SendAsync(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationToken cancellationToken)
+   at MoviesAPI.PollyHelper.PollyRetryHelper.<>c__DisplayClass2_0.<ExecuteApiCallWithRetryAsync>b__2() in D:\Pranay\Udemy\MoviesAPI\MoviesAPI\PollyHelper\PollyRetryHelper.cs:line 47
+   at Polly.AsyncPolicy`1.<>c__DisplayClass5_0.<ExecuteAsync>b__0(Context _, CancellationToken _)
+   at Polly.Retry.AsyncRetryEngine.ImplementationAsync[TResult](Func`3 action, Context context, ExceptionPredicates shouldRetryExceptionPredicates, ResultPredicates`1 shouldRetryResultPredicates, Func`5 onRetryAsync, CancellationToken cancellationToken, Int32 permittedRetryCount, IEnumerable`1 sleepDurationsEnumerable, Func`4 sleepDurationProvider, Boolean continueOnCapturedContext)
+   at Polly.AsyncPolicy`1.ExecuteInternalAsync(Func`3 action, Context context, Boolean continueOnCapturedContext, CancellationToken cancellationToken)
+   at MoviesAPI.PollyHelper.PollyRetryHelper.ExecuteApiCallWithRetryAsync(HttpClient client, HttpMethod method, String url) in D:\Pranay\Udemy\MoviesAPI\MoviesAPI\PollyHelper\PollyRetryHelper.cs:line 45
+   at MoviesAPI.Controllers.GenresController.Get(Int32 id) in D:\Pranay\Udemy\MoviesAPI\MoviesAPI\Controllers\GenresController.cs:line 91
+   at lambda_method9(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextExceptionFilterAsync>g__Awaited|26_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ExceptionContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at MoviesAPI.Middlwares.ExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in D:\Pranay\Udemy\MoviesAPI\MoviesAPI\Middlwares\ExceptionHandlingMiddleware.cs:line 21
+Controller: Genres
+Method: Get
+Line Number: 47
+Timestamp: 24-05-2025 8.37.29 PM
+File: D:\Pranay\Udemy\MoviesAPI\MoviesAPI\PollyHelper\PollyRetryHelper.cs
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------

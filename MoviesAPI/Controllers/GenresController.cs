@@ -2,12 +2,16 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MoviesAPI.CommonFunctionalities;
 using MoviesAPI.Data;
 using MoviesAPI.DTOs;
 using MoviesAPI.Entities;
 using MoviesAPI.Helpers;
+using MoviesAPI.PollyHelper;
 using MoviesAPI.Services;
+using Newtonsoft.Json;
 using Repository;
+using System.Text;
 //using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
 
 namespace MoviesAPI.Controllers
@@ -19,14 +23,15 @@ namespace MoviesAPI.Controllers
         private readonly IRepository repository;
         private readonly ApplicationDBContext _context;
         private readonly IMapper mapper;
+        private readonly OpenAiService _openAi;
 
 
-
-        public GenresController(IRepository repository, ApplicationDBContext context, IMapper _mapper)
+        public GenresController(IRepository repository, ApplicationDBContext context, IMapper _mapper, OpenAiService openAi)
         {
             this.repository = repository;
             _context = context;
             mapper = _mapper;
+            _openAi = openAi;
         }
 
 
@@ -55,10 +60,11 @@ namespace MoviesAPI.Controllers
         public async Task<IActionResult> POST([FromBody] GenreCreationDTO genreCreationDTO)
         {
 
-            Logger.LogIntoText();
+
 
             try
             {
+
                 var genre = mapper.Map<Genre>(genreCreationDTO);
                 _context.Genres.Add(genre);
                 await _context.SaveChangesAsync();
@@ -66,6 +72,7 @@ namespace MoviesAPI.Controllers
             }
             catch (Exception ex)
             {
+
                 throw;
             }
         }
@@ -76,6 +83,34 @@ namespace MoviesAPI.Controllers
         {
             try
             {
+                //using (HttpClient client = new HttpClient())
+                //{
+                //    var url = "https://localhost:7060/api/retry";
+                //    var response = await PollyRetryHelper.ExecuteApiCallWithRetryAsync(client, HttpMethod.Get, url);
+                //    var result = await response.Content.ReadAsStringAsync();
+                //}
+
+
+
+                //using (HttpClient client = new HttpClient())
+                //{
+                //    var url = "https://localhost:7060/api/retry";
+                //    var obj = JsonConvert.SerializeObject(new
+                //    {
+                //        MyProperty = 1,
+                //        MyProperty1 = 2
+                //    });
+                //    client.DefaultRequestHeaders.Add("w-gateway-key", "your-key-value");
+                //    HttpContent content = new StringContent(obj, Encoding.UTF8, "application/json");
+                //    var response = await PollyRetryHelper.ExecuteApiCallWithRetryAsync(client, HttpMethod.Post, url, content);
+                //    var result = await response.Content.ReadAsStringAsync();
+                //}
+
+
+
+
+
+
                 var genre = await _context.Genres.FirstOrDefaultAsync(x => x.Id == id);
                 if (genre == null)
                 {
@@ -85,7 +120,7 @@ namespace MoviesAPI.Controllers
             }
             catch (Exception ex)
             {
-
+                Logger.LogIntoText();
                 throw;
             }
 
