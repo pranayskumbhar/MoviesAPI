@@ -59,9 +59,6 @@ namespace MoviesAPI.Controllers
         // Method : POST
         public async Task<IActionResult> POST([FromBody] GenreCreationDTO genreCreationDTO)
         {
-
-
-
             try
             {
 
