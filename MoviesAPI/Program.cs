@@ -95,6 +95,7 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddSingleton<IRepository, InMemoryRepository>();
+builder.Services.AddSingleton<IFileOperation, FileOperationService>();
 
 var app = builder.Build();
 
